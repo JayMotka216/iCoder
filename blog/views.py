@@ -1,5 +1,5 @@
-from django.shortcuts import render, HttpResponse
-from blog.models import Post
+from django.shortcuts import render, HttpResponse, redirect
+from blog.models import Post, BlogComment
 
 def blogHome(request):
     allpost = Post.objects.all()
@@ -8,6 +8,11 @@ def blogHome(request):
 
 def blogPost(request, slug):
     post = Post.objects.filter(slug = slug).first()
-    params = {'post':post}
+    comments = BlogComment.objects.filter(post = post)
+    params = {'post':post, 'comments':comments}
     return render(request, 'blog/blogPost.html', params)
 # Create your views here.
+
+def postComment(request):
+
+    return redirect('/')
