@@ -6,44 +6,34 @@
 <div class="container">
     <div class="jumbotron my-5">
     <h1 class="display-4">Welcome to <strong>iCoder!</strong> </h1>
-    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+    <p class="lead">Read <strong>Blogs</strong> for Code and Information</p>
     <hr class="my-4">
-    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+    <p>This site contains many articles and blogs from verious and famous writer around the glob.</p>
     <a class="btn btn-primary btn-lg" href="/blog/" role="button">Go to Blog</a>
     </div>
 </div>
 
 <div class="container">
     <h2 class="text-secondary mb-3"><strong>Popular Blog Posts</strong></h2><hr/>
+    {% for post in fetured %}
     <div class="row my-4">
-        <div class="col-md-6">
+        <div class="col">
           <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static">
-              <strong class="d-inline-block mb-2 text-primary">World</strong>
-              <h3 class="mb-0">Featured post</h3>
-              <div class="mb-1 text-muted">Nov 12</div>
-              <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-              <a href="/blog/blogpost" role="button" class="btn btn-primary stretched-link">Continue reading</a>
+              <p class="d-inline-block mb-2 text-primary">--By <strong>{{post.author}}</strong></p>
+              <h3 class="mb-0">{{post.title}}</h3>
+              <div class="mb-1 text-muted">{{post.datetime}}</div>
+              <p class="card-text mb-auto mt-3">{{post.content| truncatechars:200}}</p>
+              <div>
+                <a href="/blog/{{post.slug}}" role="button" class="btn btn-primary stretched-link">Continue reading</a>
+              </div>
             </div>
             <div class="col-auto d-none d-lg-block">
-              <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+              <img class="bd-placeholder-img" width="300" height="250" src="/images/{{post.image}}" preserveAspectRatio="xMidYMid slice" focusable="false"></img>
             </div>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="col p-4 d-flex flex-column position-static">
-              <strong class="d-inline-block mb-2 text-success">Design</strong>
-              <h3 class="mb-0">Post title</h3>
-              <div class="mb-1 text-muted">Nov 11</div>
-              <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-              <a href="/blog/blogpost" role="button" class="btn btn-primary stretched-link">Continue reading</a>
-            </div>
-            <div class="col-auto d-none d-lg-block">
-              <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-            </div>
-          </div>
-        </div>
-      </div>
+    </div>
+    {% endfor %}
 </div>
 {% endblock body %}

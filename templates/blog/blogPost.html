@@ -2,13 +2,35 @@
 
 {% block title %} BlogPost {% endblock title %}
 {% block blogactive %}active{% endblock blogactive %}
-
+{% block style %} <style>
+    .text::first-letter {
+        font-size: 250%;
+        color: #434649;
+    }
+    .text {
+        font-size: 16px;
+    }
+    .jumbotron {
+        height: 250px;
+    }
+</style> {% endblock style %}
 {% block body %}
-<h3>Blog Post </h3>
+<div class="container">
+    <div class="jumbotron row my-5">
+        <div class="col-md-8">   
+            <div class="blog-post">
+                <h2 class="blog-post-title text-dark my-3 display-4">
+                    <strong class="ml-2 mt-3">{{post.title}}</strong><hr/>
+                    <p class="lead">{{post.timestamp}} by <a href="/about">{{post.author}}</a></p>
+                </h2>
+            </div>
+        </div>
+            <div class="col-md-4">
+                <img src="/images/{{post.image}}" width="100%" height="250px" class="mb-3 mx-0" preserveAspectRatio="xMidYMid slice">
+            </div>
+        <div class="border p-4"><p class="text">{{post.content}}</p></div>
+    </div>
+</div>
 {% endblock body %}
-
 {% block js %}
-<script>
-    console.log("hello");
-</script>
 {% endblock js %}

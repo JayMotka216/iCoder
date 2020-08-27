@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
     <title>{% block title %}{% endblock title %}</title>
+    {% block style %}{% endblock style %}
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -21,23 +22,23 @@
           <ul class="navbar-nav mr-auto">
             <li class="nav-item {% block homeactive %}
             {% endblock homeactive %} ">
-              <a class="nav-link " href="/"><h6>Home</h6></a>
+              <a class="nav-link " href="/"><h5>Home</h5></a>
             </li>
             <li class="nav-item {% block blogactive %}
             {% endblock blogactive %} ">
-              <a class="nav-link" href="/blog/"><h6>Blog</h6></a>
+              <a class="nav-link" href="/blog/"><h5>Blog</h5></a>
             </li>
             <li class="nav-item {% block aboutactive %}
             {% endblock aboutactive %} ">
-              <a class="nav-link" href="/about/"><h6>About</h6></a>
+              <a class="nav-link" href="/about/"><h5>About</h5></a>
             </li>
             <li class="nav-item {% block contactactive %}
             {% endblock contactactive %} ">
-              <a class="nav-link" href="/contact/"><h6>Contact</h6></a>
+              <a class="nav-link" href="/contact/"><h5>Contact</h5></a>
             </li>
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <form method="get" action="/search" class="form-inline my-2 my-lg-0">
+            <input name="query" id="query" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
         </div>

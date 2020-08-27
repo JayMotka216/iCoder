@@ -1,10 +1,19 @@
 {% extends 'base.html' %}
 
-{% block title %} Blog {% endblock title %}
-{% block blogactive %}active{% endblock blogactive %}
+{% block title %} Search {% endblock title %}
 {% block body %}
 <div class="container">
-    <h2 class="text-secondary my-3 mt-5">Coding articles by <strong>iCoder</strong></h2><hr/>
+    <h2 class="text-success my-3 mt-5">Search Results for <strong>{{query}}</strong> </h2><hr/>
+    {% if allpost|length == 0 %}
+    <div class="my-4 text-danger">
+        No result found!<br><br/>
+        <span class="text-warning">Suggestion: 
+            <br/>&nbsp;&nbsp;&nbsp;-&nbsp;Try another keyword to search.
+            <br/>&nbsp;&nbsp;&nbsp;-&nbsp;Try lesser keywords to search.
+            <br/>&nbsp;&nbsp;&nbsp;-&nbsp;Try appropriate keyword to search.
+        </span>
+    </div>
+    {% endif %}
     {% for post in allpost %}
     <div class="row my-4">
         <div class="col">
