@@ -39,7 +39,9 @@
           </ul>
           <form method="get" action="/search" class="form-inline my-2 my-lg-0">
             <input name="query" id="query" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <button class="btn btn-outline-success my-2 mr-3 my-sm-0" type="submit">Search</button>
+            <button type="button" class="btn btn-outline-primary my-2 ml-3 my-sm-0" data-toggle="modal" data-target="#signupmodal" data-whatever="@mdo">Sign Up</button>
+            <button type="button" class="btn btn-outline-primary my-2 ml-2 my-sm-0" data-toggle="modal" data-target="#loginmodal" data-whatever="@mdo">Log In</button>
           </form>
         </div>
     </nav>
@@ -51,6 +53,80 @@
       </button>
     </div>
     {% endfor %}
+<!-- Sign Up Modal -->
+    <div class="modal fade" id="signupmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Sign Up</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="signup/" method="POST">{% csrf_token %}
+              <div class="form-group">
+                <label for="uname" class="col-form-label">Enter User Name:</label>
+                <input type="text" name="uname" class="form-control" id="uname" required>
+              </div>
+              <div class="form-group">
+                <label for="fname" class="col-form-label">First Name:</label>
+                <input type="text" name="fname" class="form-control" id="fname" required>
+                <label for="lname" class="col-form-label">Last Name:</label>
+                <input type="text" name="lname" class="form-control" id="lname" required>
+              </div>
+              <div class="form-group">
+                <label for="email" class="col-form-label">Email:</label>
+                <input type="email" name="email" class="form-control" id="email" required>
+              </div>
+              <div class="form-group">
+                <label for="pass1" class="col-form-label">Enter Password:</label>
+                <input type="password" name="pass1" class="form-control" id="pass1" required>
+              </div>
+              <div class="form-group">
+                <label for="cpass" class="col-form-label">Confirm Password:</label>
+                <input type="password" name="cpass" class="form-control" id="cpass" required>
+              </div>
+              <button type="submit" class="btn btn-primary my-3"">Sign Up</button>
+              <button type="button" class="btn btn-secondary my-3" data-dismiss="modal">Close</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+
+<!-- Log In Modal -->
+<div class="modal fade" id="loginmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Log In</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="login/" method="POST">{% csrf_token %}
+          <div class="form-group">
+            <label for="username" class="col-form-label">UserName:</label>
+            <input type="text" name="uname" class="form-control" id="username" required>
+          </div>
+          <div class="form-group">
+            <label for="pass" class="col-form-label">Enter Password:</label>
+            <input type="password" name="pass" class="form-control" id="pass" required>
+          </div>
+          <button type="submit" class="btn btn-primary mt-3">Log In</button>
+          <button type="button" class="btn btn-secondary mt-3" data-dismiss="modal">Close</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>    
+
     {% block body %}{% endblock body %}
 
     <!-- Optional JavaScript -->
