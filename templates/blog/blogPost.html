@@ -16,6 +16,15 @@
     .img{
         padding-left: 0px;
     }
+    .cmt{
+        border-radius: 50%;
+    }
+    .comment{
+        border-radius: 20px;
+    }
+    .bg-cmt{
+        border: 1px solid;
+    }
 </style> {% endblock style %}
 {% block body %}
 <div class="container mb-3">
@@ -33,14 +42,35 @@
         </div>
     </div>
     <div class="my-3"><p>&nbsp;&nbsp;&nbsp;&nbsp;</p></div>
-    <div class="border p-4 mb-3"><p class="text">{{post.content}}</p></div>
+    <div class="border p-4 mb-3"><p class="text mb-3">{{post.content}}</p></div>
 </div>
-<div class="container">
-    <h2 class="text-secondary my-3">Comments</h2><hr/>
-    <div class="row">
-        <div class="col-md-2">image here</div>
-        <div class="col-md-10">Comment here</div>
+<div class="container p-3"></div>
+<div class="container comment bg-cmt text-secondary my-3">
+    <h2 class="mt-3">Comments ({{comments|length}})</h2><hr/>
+    <div class="my-2">
+        {%if request.user.is_anonymous %}
+        <h3>Log In to post a comment!</h3>
+        {% else %}
+        <form action="/blog/postComment" method="post"> {% csrf_token %}
+            <div class="form-group">
+                <input type="text" name='comment' class="form-control" placeholder="Enter Comment">
+                <input type="hidden" name='postId' value='{{post.sno}}'>
+            </div>
+            <input type="submit" class="btn btn-primary mb-3" value="submit">
+        </form>
+        {% endif %}
     </div>
+    {% for comment in comments %}
+        <div class="row border-secondary">
+            <div class="col-1 mt-3">
+                <img src="/statics/img/user.png" alt="user" width="100%" class="cmt">
+            </div>
+            <div class="col-7 mt-3">
+                <h6>{{comment.user.username}} @{{comment.timestamp}}</h6>
+                <div><p>{{comment.comment}}</p></div>
+            </div>
+        </div>
+    {% endfor %}
 </div>
 {% endblock body %}
 {% block js %}
