@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-
+{% load humanize %}
+{% load extra %}
 {% block title %} BlogPost {% endblock title %}
 {% block blogactive %}active{% endblock blogactive %}
 {% block style %} <style>
@@ -18,6 +19,10 @@
     }
     .cmt{
         border-radius: 50%;
+    }
+    .rpy{
+        border-radius: 50%;
+        width: 150%;
     }
     .comment{
         border-radius: 20px;
@@ -42,7 +47,7 @@
         </div>
     </div>
     <div class="my-3"><p>&nbsp;&nbsp;&nbsp;&nbsp;</p></div>
-    <div class="border p-4 mb-3"><p class="text mb-3">{{post.content}}</p></div>
+    <div class="border p-4 mb-3"><p class="text mb-3">{{post.content|safe}}</p></div>
 </div>
 <div class="container p-3"></div>
 <div class="container comment bg-cmt text-secondary my-3">
@@ -55,6 +60,7 @@
             <div class="form-group">
                 <input type="text" name='comment' class="form-control" placeholder="Enter Comment">
                 <input type="hidden" name='postId' value='{{post.sno}}'>
+                <input type="hidden" name='parentId' value=''>
             </div>
             <input type="submit" class="btn btn-primary mb-3" value="submit">
         </form>
@@ -66,9 +72,43 @@
                 <img src="/statics/img/user.png" alt="user" width="100%" class="cmt">
             </div>
             <div class="col-7 mt-3">
-                <h6>{{comment.user.username}} @{{comment.timestamp}}</h6>
+                <h6><strong>{{comment.user.username}}</strong> @{{comment.timestamp|naturaltime}}</h6>
                 <div><p>{{comment.comment}}</p></div>
+                {% for reply in replies|get_val:comment.sno %}       
+                <div class="row">
+                    <div class="col-1 mt-3">
+                        <img src="/statics/img/user.png" alt="user" width="100%" class="rpy">
+                    </div>
+                    <div class="col-7 replies my-3">
+                        <h6><strong>{{reply.user.username}}</strong> @{{reply.timestamp|naturaltime}}</h6>
+                        <div><p>{{reply.comment}}</p></div>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
+            {% if request.user.is_anonymous %}
+                <div class="col-4"></div>
+            {% else %}
+            <div class="col-4">
+                <p>
+                    <a class="btn btn-primary" data-toggle="collapse" href="#reply{{comment.sno}}" role="button" aria-expanded="false" aria-controls="collapseExample{{comment.sno}}">
+                        Reply
+                    </a>
+                </p>
+                <div class="collapse" id="reply{{comment.sno}}">
+                    <div class="card card-body mb-3">
+                        <form action="/blog/postComment" method="post"> {% csrf_token %}
+                            <div class="form-group">
+                                <input type="text" name='comment' class="form-control" placeholder="Reply comment">
+                                <input type="hidden" name='parentId' value='{{comment.sno}}'>
+                            </div>
+                            <input type="hidden" name='postId' value='{{post.sno}}'>
+                            <input type="submit" class="btn btn-primary mb-3" value="submit">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
         </div>
     {% endfor %}
 </div>
